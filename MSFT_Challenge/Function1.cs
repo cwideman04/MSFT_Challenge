@@ -26,9 +26,17 @@ namespace MSFT_Challenge
             string longitude = req.Query["longitude"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            latitude = latitude ?? data?.latitude;
-            longitude = longitude ?? data?.longitude;
+            //Catch bad JSON Syntax
+            try
+            {
+                dynamic data = JsonConvert.DeserializeObject(requestBody);
+                latitude = latitude ?? data?.latitude;
+                longitude = longitude ?? data?.longitude;
+            }
+            catch (Exception)
+            {
+                return new BadRequestObjectResult(new { Error = "Unknown JSON Syntax" });
+            }
 
 
             string returntxt;
@@ -88,13 +96,13 @@ namespace MSFT_Challenge
             {
                 //If error occures write to log and clear any returntxt
                 log.LogInformation("Datebase Connection Error" + ex.ToString());
-                return new BadRequestObjectResult(new { Error = "Please pass in Latitude and Longitude" });
+                return new BadRequestObjectResult(new { Error = "Please pass in Latitude and Longitude in EPSG:4326 format" });
             }
 
 
             return returntxt != null
                 ? (ActionResult)new OkObjectResult(returntxt)
-                : new BadRequestObjectResult(new { Error = "Please pass in Latitude and Longitude" });
+                : new BadRequestObjectResult(new { Error = "Please pass in Latitude and Longitude in EPSG:4326 format" });
         }
     }
 }
