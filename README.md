@@ -2,7 +2,7 @@
 
 ## Goal:
 
-My goal is to create a REST API to take in a user’s location in San Francisco and give back 5 of the nearest Food Trucks. As a learning/refresher exercise I want to go with Azure and make it serverless and scalable to be able to handle other locations. We in Atlanta also enjoy Food Trucks. Time frame for completion is ~ 3 hours. (with learning curve, it is going to be closer to ~ 5 hours)
+My goal is to create a API to take in a user’s location in San Francisco and give back 5 of the nearest Food Trucks. As a learning/refresher exercise I want to go with Azure and make it serverless and scalable to be able to handle other locations. We in Atlanta also enjoy Food Trucks. Time frame for completion is ~ 3 hours. (with learning curve, it is going to be closer to ~ 5 hours)
 
 ## Implementation:
 
