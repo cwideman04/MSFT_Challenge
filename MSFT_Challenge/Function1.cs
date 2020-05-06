@@ -21,11 +21,12 @@ namespace MSFT_Challenge
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            //Get Input Params
+            //Get Input Parameters
             string latitude = req.Query["latitude"];
             string longitude = req.Query["longitude"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            
             //Catch bad JSON Syntax
             try
             {
@@ -37,6 +38,21 @@ namespace MSFT_Challenge
             {
                 return new BadRequestObjectResult(new { Error = "Unknown JSON Syntax" });
             }
+
+
+
+            //Validate Input
+            if (!decimal.TryParse(latitude, out decimal j) | (j < -90 || j > 90))
+            {
+                return new BadRequestObjectResult(new { Error = "Latitude is required and must be between - 90 and 90 degrees." });
+            }
+
+            if (!decimal.TryParse(longitude, out decimal k) | (k < -180 || k > 180))
+            {
+                return new BadRequestObjectResult(new { Error = "Longitude is required and must be between -180 and 180 degrees." });
+            }
+
+
 
 
             string returntxt;
@@ -55,17 +71,6 @@ namespace MSFT_Challenge
                             "WHERE  Status = 'APPROVED' AND GeoLocation.STDistance(geography::Point(@lat, @long, 4326)) IS NOT NULL " +
                             "ORDER BY GeoLocation.STDistance(geography::Point(@lat, @long, 4326));";
 
-            //Validate Input
-            if (!decimal.TryParse(latitude, out decimal j) | (j < -90 || j > 90))
-            {
-                return new BadRequestObjectResult(new { Error = "Latitude is required and must be between - 90 and 90 degrees." });
-            }
-
-            if (!decimal.TryParse(longitude, out decimal k) | (k < -180 || k > 180))
-            {
-                return new BadRequestObjectResult(new { Error = "Longitude is required and must be between -180 and 180 degrees." });
-            }
-
 
             try
             {
@@ -81,9 +86,8 @@ namespace MSFT_Challenge
                     DataTable table = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
 
-                    //Open Connection
+                    //Open Connection, Fill Table, Close Connection
                     conn.Open();
-
                     da.Fill(table);
                     conn.Close();
 
