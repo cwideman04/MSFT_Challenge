@@ -6,7 +6,7 @@ My goal is to create a REST API to take in a user’s location in San Francisco 
 
 ## Implementation:
 
-I chose to use an Azure Function for my development.  Azure Function are serverless and have multiple hosting plans as user load grows.
+I opted to use an Azure Function for my development.  Azure Function are serverless and have multiple hosting plans as user load grows.
 
 Some Benefits:
 - Can pay only when your functions are running.
@@ -65,6 +65,37 @@ For example: https://msftchallenge20200505163449.azurewebsites.net/api/FoodTruck
 
 ## If I had more time!
 - Add parameter for "return record count" with default value of 5.
+- Lock down the implementation with available security features
+- Use Azure API Management as the entry point. 
 - Would like to explore Cosmos DB for the data layer and understand what kind of supports it has for spatial data.
 - Create a front end using Azure Maps.
+- Create an IOT component. Have each Truck give live updates of location. If truck breaks down or is late to address user will know. Can also add notification for saved food trucks when they arrive.
 
+
+## Getting Started
+
+### Prerequisites
+To run this sample you will need the following:
+- Azure Account 
+- Azure SQL Database
+- Visual Studio 2019
+
+### Download the sample and load the data
+- Clone the sample repo.
+- Using the FoodTruck2.csv, create a table named "Mobile_Food" in an Azure SQL Database and load in the csv file. Make sure the last column “GeoLocation” is of type geography.
+- To create a Spatial index on “GeoLocation” run the following SQL Query:
+
+
+```sql
+Create Spatial INDEX IX_FoodTruck_SpatialLocation
+ON dbo.Mobile_Food (GeoLocation)
+USING GEOGRAPHY_GRID
+WITH (Data_Compression = PAGE);
+```
+
+
+- In Visual Studio add an Azure App Service Setting:
+  - Name  = “sqldb_connection”
+  - Value for both Local & Remote values should be your Azure Database Connection String
+
+- Run the Application
