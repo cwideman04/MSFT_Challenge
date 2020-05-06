@@ -13,7 +13,7 @@ Some Benefits:
 - Scale out automatically, even during periods of high load and in when code stops running.
 - High availability.
 - Can be Imported to Azure API Management, to help secure and manage all APIs
-- Develop online or Publish directly with in Visual Studio
+- Develop in Azure Portal or Publish directly with in Visual Studio
 
 For the data layer I decided to use Azure SQL database. Azure SQL database have a serverless option for lower usage scenarios. Also, SQL databases have geography spatial data type and functions to quickly do Nearest Neighbor Analysis.
 
@@ -24,7 +24,7 @@ Some Benefits:
 - Supports spatial data and spatial indexes.
 
 Tradeoffs
-- For the consumption plan, there is no “always on” option for function apps and Azure serverless SQL Databases automatically pauses when inactive causing cold start latencies exceeding 45 seconds at times
+- For the consumption plan, there is no “always on” option for function apps. Also Azure serverless SQL Databases automatically pauses when inactive. Both off these can cause cold start latencies exceeding 45 seconds at times
 
 
 ## API Documentation
