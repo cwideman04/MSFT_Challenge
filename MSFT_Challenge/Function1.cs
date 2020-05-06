@@ -55,7 +55,7 @@ namespace MSFT_Challenge
 
             if (!decimal.TryParse(longitude, out decimal k) | (k < -180 || k > 180))
             {
-                return new BadRequestObjectResult(new { Error = "Longitude is required must be between -180 and 180 degrees." });
+                return new BadRequestObjectResult(new { Error = "Longitude is required and must be between -180 and 180 degrees." });
             }
 
 
