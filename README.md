@@ -92,7 +92,7 @@ ON dbo.Mobile_Food (GeoLocation)
 USING GEOGRAPHY_GRID
 WITH (Data_Compression = PAGE);
 ```
-
+Link to Spatial Indexing https://docs.microsoft.com/en-us/sql/relational-databases/spatial/spatial-indexes-overview?view=sql-server-ver15
 
 - In Visual Studio add an Azure App Service Setting:
   - Name  = “sqldb_connection”
